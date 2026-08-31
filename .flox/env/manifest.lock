@@ -1,0 +1,198 @@
+{
+  "lockfile-version": 1,
+  "manifest": {
+    "schema-version": "1.15.0",
+    "install": {
+      "claude-code": {
+        "pkg-path": "flox/claude-code",
+        "pkg-group": "claude-code"
+      },
+      "flox-agent": {
+        "pkg-path": "flox/flox-agent",
+        "pkg-group": "flox-agent"
+      }
+    },
+    "hook": {},
+    "profile": {},
+    "options": {}
+  },
+  "packages": [
+    {
+      "attr_path": "claude-code",
+      "broken": false,
+      "derivation": "/nix/store/72fa5spga2njfgrb88g6k6wp8b903v2p-claude-code-2.1.251.drv",
+      "description": "Agentic coding tool from Anthropic",
+      "install_id": "claude-code",
+      "license": "Unfree",
+      "locked_url": "https://github.com/flox/floxenvs?rev=481b6136c44f517eb94b11df49ec61dc90622249",
+      "name": "claude-code-2.1.251",
+      "pname": "claude-code",
+      "rev": "481b6136c44f517eb94b11df49ec61dc90622249",
+      "rev_count": 22261,
+      "rev_date": "2026-08-28T22:01:04Z",
+      "scrape_date": "2026-08-31T21:37:26.880375Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "2.1.251",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/kckfcjm9q0pvw9lpy0991z0a8g07pq8b-claude-code-2.1.251"
+      },
+      "system": "aarch64-darwin",
+      "group": "claude-code",
+      "priority": 5
+    },
+    {
+      "attr_path": "claude-code",
+      "broken": false,
+      "derivation": "/nix/store/gb9jgl88nlfjgwf9d0lsfx96f7616xc8-claude-code-2.1.251.drv",
+      "description": "Agentic coding tool from Anthropic",
+      "install_id": "claude-code",
+      "license": "Unfree",
+      "locked_url": "https://github.com/flox/floxenvs?rev=481b6136c44f517eb94b11df49ec61dc90622249",
+      "name": "claude-code-2.1.251",
+      "pname": "claude-code",
+      "rev": "481b6136c44f517eb94b11df49ec61dc90622249",
+      "rev_count": 22261,
+      "rev_date": "2026-08-28T22:01:04Z",
+      "scrape_date": "2026-08-31T21:37:26.880390Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "2.1.251",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/dzvyck96kbr65ccjkh79x85zwzdidp8a-claude-code-2.1.251"
+      },
+      "system": "aarch64-linux",
+      "group": "claude-code",
+      "priority": 5
+    },
+    {
+      "attr_path": "claude-code",
+      "broken": false,
+      "derivation": "/nix/store/d805pflvklqpnvicagkbvvkk9cfa16sg-claude-code-2.1.251.drv",
+      "description": "Agentic coding tool from Anthropic",
+      "install_id": "claude-code",
+      "license": "Unfree",
+      "locked_url": "https://github.com/flox/floxenvs?rev=481b6136c44f517eb94b11df49ec61dc90622249",
+      "name": "claude-code-2.1.251",
+      "pname": "claude-code",
+      "rev": "481b6136c44f517eb94b11df49ec61dc90622249",
+      "rev_count": 22261,
+      "rev_date": "2026-08-28T22:01:04Z",
+      "scrape_date": "2026-08-31T21:37:26.880391Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": true,
+      "version": "2.1.251",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/qkdhf9ipvkzhqysvs2j9pmb27899yip0-claude-code-2.1.251"
+      },
+      "system": "x86_64-linux",
+      "group": "claude-code",
+      "priority": 5
+    },
+    {
+      "attr_path": "flox-agent",
+      "broken": false,
+      "derivation": "/nix/store/fl8w2wz6kp53vh5j0q7i8959gqhlkih3-flox-agent-0.8.0.drv",
+      "description": "Flox-native config management for Claude Code CLI",
+      "install_id": "flox-agent",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/flox-agent?rev=84d4787bdbedfb860d7ab164af7af60c735248ad",
+      "name": "flox-agent-0.8.0",
+      "pname": "flox-agent",
+      "rev": "84d4787bdbedfb860d7ab164af7af60c735248ad",
+      "rev_count": 91,
+      "rev_date": "2026-08-31T11:19:16Z",
+      "scrape_date": "2026-08-31T21:37:34.150520Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.8.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/fzcg8wl5wjl9wa0pfcf5iqqmqkz8fiq9-flox-agent-0.8.0"
+      },
+      "system": "aarch64-darwin",
+      "group": "flox-agent",
+      "priority": 5
+    },
+    {
+      "attr_path": "flox-agent",
+      "broken": false,
+      "derivation": "/nix/store/vpbzxzdqfzskpnpfxj63yw3yhhx36xpz-flox-agent-0.8.0.drv",
+      "description": "Flox-native config management for Claude Code CLI",
+      "install_id": "flox-agent",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/flox-agent?rev=84d4787bdbedfb860d7ab164af7af60c735248ad",
+      "name": "flox-agent-0.8.0",
+      "pname": "flox-agent",
+      "rev": "84d4787bdbedfb860d7ab164af7af60c735248ad",
+      "rev_count": 91,
+      "rev_date": "2026-08-31T11:19:16Z",
+      "scrape_date": "2026-08-31T21:37:34.150525Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.8.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/isw1fpvyaiqsmrvn3i1fshpy5am57cfq-flox-agent-0.8.0"
+      },
+      "system": "aarch64-linux",
+      "group": "flox-agent",
+      "priority": 5
+    },
+    {
+      "attr_path": "flox-agent",
+      "broken": false,
+      "derivation": "/nix/store/98q045rx6rx1harswpga6b1rd4w0d5yd-flox-agent-0.8.0.drv",
+      "description": "Flox-native config management for Claude Code CLI",
+      "install_id": "flox-agent",
+      "license": "MIT",
+      "locked_url": "https://github.com/flox/flox-agent?rev=84d4787bdbedfb860d7ab164af7af60c735248ad",
+      "name": "flox-agent-0.8.0",
+      "pname": "flox-agent",
+      "rev": "84d4787bdbedfb860d7ab164af7af60c735248ad",
+      "rev_count": 91,
+      "rev_date": "2026-08-31T11:19:16Z",
+      "scrape_date": "2026-08-31T21:37:34.150527Z",
+      "stabilities": [
+        "staging",
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.8.0",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/2q05kj691zh2nqysnggaifg29298wckl-flox-agent-0.8.0"
+      },
+      "system": "x86_64-linux",
+      "group": "flox-agent",
+      "priority": 5
+    }
+  ]
+}
