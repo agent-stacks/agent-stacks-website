@@ -1,47 +1,290 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>agent-stacks.org</title>
-    <meta name="description" content="agent-stacks.org" />
-    <link rel="icon" href="data:," />
-    <style>
-      :root {
-        color-scheme: light dark;
-        --bg: #ffffff;
-        --fg: #101014;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #0d0d10;
-          --fg: #f2f2f4;
-        }
-      }
-      html,
-      body {
-        height: 100%;
-      }
-      body {
-        margin: 0;
-        display: grid;
-        place-items: center;
-        background: var(--bg);
-        color: var(--fg);
-        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-          "Liberation Mono", monospace;
-      }
-      h1 {
-        margin: 0;
-        padding: 0 1rem;
-        font-size: clamp(1.5rem, 7vw, 3.5rem);
-        font-weight: 600;
-        letter-spacing: -0.02em;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>agent-stacks.org</h1>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Stacks</title>
+<meta name="description" content="An open specification for agent stacks on disk — the harness, its plugins, and the runtimes they need, as one reproducible unit.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#000; --paper:#fff;
+  --tile:#efefef; --line:#e0e0e0; --line-2:#c9c9c9;
+  --muted:#5c5c5c; --faint:#8a8a8a;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --maxw:1000px;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#fff; --paper:#0a0a0a;
+    --tile:#141414; --line:#262626; --line-2:#3a3a3a;
+    --muted:#a6a6a6; --faint:#767676;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#fff; --paper:#0a0a0a;
+  --tile:#141414; --line:#262626; --line-2:#3a3a3a;
+  --muted:#a6a6a6; --faint:#767676;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.mark{width:100%;height:100%;display:block}
+.mark .solid{fill:var(--ink)}
+.mark .hollow{fill:none;stroke:var(--ink);stroke-width:10;stroke-linejoin:miter}
+
+/* header */
+header{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hwrap{max-width:var(--maxw);margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;letter-spacing:-.02em}
+.brand svg{width:24px;height:24px}
+nav{margin-left:auto;display:flex;gap:22px;font-size:14.5px}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+@media(max-width:720px){nav a.hide-sm{display:none}}
+
+/* layout */
+main{max-width:var(--maxw);margin:0 auto;padding:0 28px 96px}
+section{padding-top:72px}
+h1{font-size:clamp(34px,5.5vw,52px);line-height:1.05;letter-spacing:-.035em;font-weight:600;margin:0 0 18px}
+h2{font-size:24px;letter-spacing:-.02em;font-weight:600;margin:0 0 14px}
+h3{font-size:16px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+p{margin:0 0 16px;max-width:68ch;color:var(--muted)}
+p.lead{font-size:19px;color:var(--ink);max-width:60ch}
+strong{color:var(--ink);font-weight:500}
+
+/* hero */
+.hero{padding-top:64px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-block;padding:9px 16px;border-radius:7px;text-decoration:none;font-size:14.5px;
+  font-weight:500;border:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn:hover{opacity:.85}
+
+/* stack diagram */
+.stack{margin:44px 0 0;border:1px solid var(--line);border-radius:12px;background:var(--tile);
+  padding:26px 28px;display:grid;grid-template-columns:132px 1fr;gap:28px;align-items:center}
+.stack .art{width:132px;height:132px}
+.rows{display:flex;flex-direction:column;gap:2px}
+.row{display:grid;grid-template-columns:96px 1fr;gap:16px;padding:9px 0;align-items:baseline;
+  border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .lbl{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.row .val{font-family:var(--mono);font-size:13.5px;color:var(--ink)}
+.row .val em{font-style:normal;color:var(--muted)}
+.stack figcaption{grid-column:1/-1;border-top:1px solid var(--line);margin-top:6px;padding-top:14px;
+  font-size:14px;color:var(--muted)}
+@media(max-width:680px){.stack{grid-template-columns:1fr}.stack .art{width:96px;height:96px}}
+
+/* code */
+pre{font-family:var(--mono);font-size:13px;line-height:1.65;background:var(--tile);color:var(--ink);
+  border:1px solid var(--line);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:0 0 18px}
+code{font-family:var(--mono);font-size:.92em}
+.cmt{color:var(--faint)}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:4px 0 18px;font-size:15px}
+th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);
+  font-weight:500;padding:0 14px 9px 0;border-bottom:1px solid var(--line-2)}
+td{padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--muted)}
+td:first-child{color:var(--ink)}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
+.card{border:1px solid var(--line);border-radius:11px;padding:18px 20px;text-decoration:none;display:block;
+  transition:border-color .2s}
+.card:hover{border-color:var(--line-2)}
+.card p{margin:0;font-size:14.5px}
+@media(max-width:680px){.cards{grid-template-columns:1fr}}
+
+ul{margin:0 0 16px;padding-left:20px;max-width:68ch;color:var(--muted)}
+li{margin-bottom:8px}
+li strong{color:var(--ink)}
+
+footer{border-top:1px solid var(--line);margin-top:40px}
+.fwrap{max-width:var(--maxw);margin:0 auto;padding:26px 28px 60px;display:flex;gap:24px;flex-wrap:wrap;
+  font-size:13.5px;color:var(--faint)}
+.fwrap a{color:var(--muted);text-decoration:none}
+.fwrap a:hover{color:var(--ink)}
+.spacer{margin-left:auto}
+.draft{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid var(--line-2);border-radius:5px;padding:3px 7px;color:var(--faint)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hwrap">
+    <a class="brand" href="/">
+      <svg class="mark" viewBox="0 0 200 200" aria-hidden="true">
+        <polygon class="solid"  points="78,40 122,40 130,48 130,60 122,68 78,68 70,60 70,48"/>
+        <polygon class="hollow" points="60,86 140,86 148,94 148,106 140,114 60,114 52,106 52,94"/>
+        <polygon class="solid"  points="42,132 158,132 166,140 166,152 158,160 42,160 34,152 34,140"/>
+      </svg>
+      Agent Stacks
+    </a>
+    <nav>
+      <a href="https://github.com/agent-stacks/agent-stacks-spec">Specification</a>
+      <a href="https://github.com/agent-stacks/agent-pkgs/blob/main/docs/guides/index.md">Guides</a>
+      <a href="https://github.com/agent-stacks/agent-pkgs/tree/main/pkgs" class="hide-sm">Packages</a>
+      <a href="#contribute">Contribute</a>
+      <a href="https://github.com/agent-stacks" class="hide-sm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <span class="draft">Draft — v0.1</span>
+  <h1>Reproducible agent stacks.</h1>
+  <p class="lead">An open specification for agent components on disk: the harness, its plugins, and the
+  runtimes they depend on, as a single unit that runs the same way on every machine.</p>
+
+  <figure class="stack">
+    <div class="art">
+      <svg class="mark" viewBox="0 0 200 200" aria-hidden="true">
+        <polygon class="solid"  points="78,40 122,40 130,48 130,60 122,68 78,68 70,60 70,48"/>
+        <polygon class="hollow" points="60,86 140,86 148,94 148,106 140,114 60,114 52,106 52,94"/>
+        <polygon class="solid"  points="42,132 158,132 166,140 166,152 158,160 42,160 34,152 34,140"/>
+      </svg>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <span class="lbl">Harness</span>
+        <span class="val">claude-code 2.1.273 <em>— and the node it runs on</em></span>
+      </div>
+      <div class="row">
+        <span class="lbl">Plugins</span>
+        <span class="val">skills, MCP servers <em>— Agent Plugins 1.1.0</em></span>
+      </div>
+      <div class="row">
+        <span class="lbl">Runtime</span>
+        <span class="val">python 3.12.8, bash 5.3p15 <em>— what the skills actually execute on</em></span>
+      </div>
+    </div>
+    <figcaption>Agent Plugins make one layer portable. A stack carries all layers in one
+    dependency set. Copy it to a machine with none of them installed, and it runs.</figcaption>
+  </figure>
+
+  <div class="cta">
+    <a class="btn" href="#guides">Package a plugin</a>
+    <a class="btn ghost" href="https://github.com/agent-stacks/agent-stacks-spec">Read the specification</a>
+  </div>
+</section>
+
+<section id="why">
+  <h2>Why Agent Stacks?</h2>
+  <p>An agent is not one program. It is a harness, a set of skills, some MCP servers, a handful of
+  prompts and settings, and implied dependencies. Today those are ad-hoc. "The same agent" could be something
+  different on every machine.</p>
+  <p>We believe agents should be:</p>
+  <ul>
+    <li><strong>Inspectable.</strong> Agent parts should be easy to identify.</li>
+    <li><strong>Composable.</strong> Agent parts should be easy to change.</li>
+    <li><strong>Reproducible.</strong> Agents should run the same on every machine.</li>
+  </ul>
+</section>
+
+<section id="specification">
+  <h2>A stack on disk</h2>
+  <p>A plugin is a directory laid out as <a href="https://agent-plugins.org">Agent Plugins</a>.
+     A stack installs its plugins under
+  <code>share/agent-plugins/</code>, one directory each, and provides one launcher script at
+  <code>bin/&lt;stack-name&gt;</code>.</p>
+
+<pre>agent-stack-my-claude/
+├── bin/
+│   └── my-claude                <span class="cmt"># the launcher</span>
+└── share/
+    └── agent-plugins/
+        └── caveman/             <span class="cmt"># unchanged from the plugin package</span>
+            ├── plugin.json
+            ├── skills/
+            └── bin/             <span class="cmt"># pinned interpreters the skills run on</span></pre>
+
+  <p>See <a href="https://github.com/agent-stacks/agent-stacks-spec">the specification</a>. A Nix
+  build, a Debian package, a Homebrew formula, or a tarball unpacked into <code>/usr/local</code> can
+  all satisfy the specification. Any conforming harness reads the same tree.
+  </p>
+
+  <h3 style="margin-top:28px">A meta specification</h3>
+  <p>Agent Stacks are deliberately minimal interpretations of existing specifications. Every <em>must</em> a builder or a client has
+  to satisfy already comes from one of three specifications.</p>
+  <table>
+    <tr><th>Standard</th><th>Organization</th><th>What we add</th></tr>
+    <tr><td>Agent Plugins</td><td>agent-plugins.org</td><td>The plugin package: manifest, layout, <code>mcp.json</code></td></tr>
+    <tr><td>Agent Skills</td><td>agentskills.io</td><td>What a skill is: <code>SKILL.md</code> and what sits beside it</td></tr>
+    <tr><td>MCP</td><td>Agentic AI Foundation</td><td>Wire behavior of the servers a plugin ships</td></tr>
+    <tr><td><em>Agent Stacks</em></td><td>agent-stacks.org</td><td>Which versions, where plugins go, dependencies, the on-disk layout</td></tr>
+  </table>
+</section>
+
+<section id="guides">
+  <h2>Guides</h2>
+  <p>Two guides cover the workflows. Both live in the
+  <a href="https://github.com/agent-stacks/agent-pkgs">agent-pkgs</a>.</p>
+  <div class="cards">
+    <a class="card" href="https://github.com/agent-stacks/agent-pkgs/blob/main/docs/guides/create-agent-plugin.md">
+      <h3>Create an agent plugin package →</h3>
+      <p>Take an existing skills repository and produce a conforming, closure-complete plugin.</p>
+    </a>
+    <a class="card" href="https://github.com/agent-stacks/agent-pkgs/blob/main/docs/guides/mk-agent-stack.md">
+      <h3>Create an agent stack package →</h3>
+      <p>Compose a harness and its plugins into one stack you can run, share, and roll back.</p>
+    </a>
+  </div>
+</section>
+
+<section id="packages">
+  <h2>A reference implementation</h2>
+  <p><a href="https://github.com/agent-stacks/agent-pkgs">agent-pkgs</a> is a Nix package set
+  implementing the layout: skills and MCP server configurations packaged as reproducible,
+  closure-complete packages and composed into stacks. It builds with plain Nix.</p>
+<pre>nix build github:agent-stacks/agent-pkgs#agent-plugin-caveman</pre>
+  <p>An organization can fork it as an internal plugin marketplace: keep the library functions, replace
+  the package set with your own, and ordinary CI builds every package on every pull request. Nix is the
+  first implementation. We invite additional implementations.</p>
+</section>
+
+<section id="contribute">
+  <h2>Open development</h2>
+  <p>Agent Stacks is developed in public. <a href="https://flox.dev">Flox</a> is the initial sponsor
+  and wrote the first implementation, and we are looking for contributors and collaborators. We are
+  not attached to any particular technology. The specification is a layout on disk; Nix is
+  just one way to produce it.</p>
+  <p>If you are packaging agent tooling already, or you maintain a harness that has to load components, <a href="https://go.flox.dev/slack">we are open to collaborating</a>.</p>
+  <div class="cards">
+    <a class="card" href="https://github.com/agent-stacks/agent-stacks-spec">
+      <h3>Specification repository →</h3>
+      <p>Read the draft, open an issue, or propose a change.</p>
+    </a>
+    <a class="card" href="https://go.flox.dev/slack">
+      <h3>#agent-stacks on Slack →</h3>
+      <p>Ask a question or tell us what breaks for you.</p>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fwrap">
+    <span>Agent Stacks</span>
+    <a href="https://github.com/agent-stacks">GitHub</a>
+    <a href="https://github.com/agent-stacks/agent-stacks-spec">Specification</a>
+    <a href="https://github.com/agent-stacks/agent-pkgs">agent-pkgs</a>
+    <span class="spacer">Initial sponsor: <a href="https://flox.dev">Flox</a></span>
+  </div>
+</footer>
+
+</body>
 </html>
