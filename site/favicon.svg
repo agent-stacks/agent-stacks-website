@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <style>
+    .solid{fill:#000}
+    .hollow{fill:none;stroke:#000;stroke-width:10;stroke-linejoin:miter}
+    @media (prefers-color-scheme: dark){
+      .solid{fill:#fff}
+      .hollow{stroke:#fff}
+    }
+  </style>
+  <polygon class="solid"  points="78,40 122,40 130,48 130,60 122,68 78,68 70,60 70,48"/>
+  <polygon class="hollow" points="60,86 140,86 148,94 148,106 140,114 60,114 52,106 52,94"/>
+  <polygon class="solid"  points="42,132 158,132 166,140 166,152 158,160 42,160 34,152 34,140"/>
+</svg>
