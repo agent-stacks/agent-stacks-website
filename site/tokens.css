@@ -1,0 +1,195 @@
+/* ==========================================================================
+   tokens.css — the only file in this site where a literal value may appear.
+
+   Everything else (components.css, index.html, components.html) must reach
+   for var(--…). .claude/scripts/check-site.py enforces this.
+
+   Dark is the default. Light is a designed variant, not an inversion.
+   The three blocks below are ordered so that an explicit [data-theme] always
+   beats the OS preference, in both directions.
+   ========================================================================== */
+
+/* --- 1. dark: the default ------------------------------------------------ */
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --ground:       #0C0D0E;
+  --panel:        #141618;
+  --panel-2:      #1B1E21;
+
+  /* rules. --line is a whisper, --line-2 is structural (>=3:1) */
+  --line:         #23262A;
+  --line-2:       #61676F;
+
+  /* ink */
+  --text:         #D6D6D2;
+  --muted:        #8E9398;
+
+  /* accent. rationed: links, # prefixes, the mark, one emphasis per diagram */
+  --accent:       #E8824F;
+  --accent-wash:  #2A1C14;
+
+  --selection:    #3A2A1F;
+}
+
+/* --- 2. light: when the OS asks and nothing overrides -------------------- */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+
+    --ground:      #FAF9F6;
+    --panel:       #F1EFEA;
+    --panel-2:     #E9E5DC;
+
+    --line:        #DFDBD2;
+    --line-2:      #8E8678;
+
+    --text:        #1A1917;
+    --muted:       #5A5751;
+
+    --accent:      #A63D16;
+    --accent-wash: #F6E7DD;
+
+    --selection:   #F0D9C8;
+  }
+}
+
+/* --- 3. light: when explicitly chosen ----------------------------------- */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --ground:      #FAF9F6;
+  --panel:       #F1EFEA;
+  --panel-2:     #E9E5DC;
+
+  --line:        #DFDBD2;
+  --line-2:      #8E8678;
+
+  --text:        #1A1917;
+  --muted:       #5A5751;
+
+  --accent:      #A63D16;
+  --accent-wash: #F6E7DD;
+
+  --selection:   #F0D9C8;
+}
+
+/* --- 4. type ------------------------------------------------------------
+   One family. IBM Plex Mono advances at 0.6em, so 72ch ~= 691px at 16px.
+   The fallbacks are all metric-similar monospaces; box-drawing glyphs come
+   from the symbol subset in fonts/ so a tree never mixes typefaces.
+   ------------------------------------------------------------------------ */
+:root {
+  --font: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+          Consolas, "Liberation Mono", monospace;
+
+  --fs-label:  0.6875rem;   /* 11px — uppercase labels, diagram text        */
+  --fs-small:  0.8125rem;   /* 13px — captions, terminal output, footnotes  */
+  --fs-code:   0.875rem;    /* 14px — commands and trees                    */
+  --fs-base:   1rem;        /* 16px — prose                                 */
+  --fs-h3:     1.0625rem;   /* 17px                                         */
+  --fs-lede:   1.1875rem;   /* 19px                                         */
+  --fs-h2:     1.375rem;    /* 22px                                         */
+  --fs-h1:     clamp(1.875rem, 1.25rem + 2.4vw, 2.75rem);  /* 30 -> 44px    */
+
+  --lh-tight:  1.25;
+  --lh-code:   1.6;
+  --lh-body:   1.75;        /* monospace prose needs the room. do not tighten */
+
+  --ls-label:  0.09em;
+  --ls-head:   -0.01em;
+
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-bold:    600;
+}
+
+/* --- 5. space: an 8px grid, with one 4px half-step ----------------------- */
+:root {
+  --s-1:  0.25rem;   /*  4px */
+  --s-2:  0.5rem;    /*  8px */
+  --s-3:  1rem;      /* 16px */
+  --s-4:  1.5rem;    /* 24px */
+  --s-5:  2rem;      /* 32px */
+  --s-6:  3rem;      /* 48px */
+  --s-7:  4rem;      /* 64px */
+  --s-8:  6rem;      /* 96px */
+}
+
+/* --- 6. layout ---------------------------------------------------------- */
+:root {
+  --measure:   72ch;    /* hard cap on prose. do not raise. */
+  --maxw:      45rem;   /* 720px — the reading column        */
+  --maxw-wide: 60rem;   /* 960px — diagrams and wide tables  */
+  --pad-x:     var(--s-4);
+
+  --parts-w:   28.25rem;  /* the parts diagram at 1:1; it scales down, not up */
+  --mark:      1.75rem;  /* 28px — below this the three bands stop reading */
+  --icon:      1.5rem;   /* 24px — the menu button's glyph */
+  --hair:      1px;
+  --radius:    4px;
+  --focus-w:   2px;
+  --focus-off: 2px;
+}
+
+/* --- 6b. breakpoints ----------------------------------------------------
+   @media conditions cannot read custom properties, so these are the only
+   literal lengths outside this file. Keep the list here in sync by hand.
+
+     40rem / 640px — nav collapses into a menu behind .nav-toggle
+
+   Everything else is fluid: the ledger and impl grids reflow on their own, and
+   wide content (diagrams, trees, terminal blocks) scrolls inside its container.
+   ------------------------------------------------------------------------ */
+
+/* --- 7. fonts: self-hosted, latin + a symbol subset for box drawing ------
+   No Google Fonts, no CDN, no external request of any kind. Two blocking
+   cross-origin round trips before first paint is exactly the local latency
+   this project exists to argue against.
+   ------------------------------------------------------------------------ */
+@font-face {
+  font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400;
+  font-display: swap; src: url("fonts/ibm-plex-mono-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500;
+  font-display: swap; src: url("fonts/ibm-plex-mono-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono"; font-style: normal; font-weight: 600;
+  font-display: swap; src: url("fonts/ibm-plex-mono-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400;
+  font-display: swap; src: url("fonts/ibm-plex-mono-400-symbols.woff2") format("woff2");
+  unicode-range: U+00B7, U+2022, U+2026, U+2190-2194, U+2500-2503, U+250C,
+    U+250F-2510, U+2513-2514, U+2517-2518, U+251B-251C, U+2523-2524, U+252B-252C,
+    U+2534, U+253C, U+2550-2551, U+2554, U+2557, U+255A, U+255D, U+25A0-25A1,
+    U+25AA, U+25B8, U+25CB, U+25CF, U+2713-2714, U+2717-2718, U+276F;
+}
+@font-face {
+  font-family: "IBM Plex Mono"; font-style: normal; font-weight: 500;
+  font-display: swap; src: url("fonts/ibm-plex-mono-500-symbols.woff2") format("woff2");
+  unicode-range: U+00B7, U+2022, U+2026, U+2190-2194, U+2500-2503, U+250C,
+    U+250F-2510, U+2513-2514, U+2517-2518, U+251B-251C, U+2523-2524, U+252B-252C,
+    U+2534, U+253C, U+2550-2551, U+2554, U+2557, U+255A, U+255D, U+25A0-25A1,
+    U+25AA, U+25B8, U+25CB, U+25CF, U+2713-2714, U+2717-2718, U+276F;
+}
+@font-face {
+  font-family: "IBM Plex Mono"; font-style: normal; font-weight: 600;
+  font-display: swap; src: url("fonts/ibm-plex-mono-600-symbols.woff2") format("woff2");
+  unicode-range: U+00B7, U+2022, U+2026, U+2190-2194, U+2500-2503, U+250C,
+    U+250F-2510, U+2513-2514, U+2517-2518, U+251B-251C, U+2523-2524, U+252B-252C,
+    U+2534, U+253C, U+2550-2551, U+2554, U+2557, U+255A, U+255D, U+25A0-25A1,
+    U+25AA, U+25B8, U+25CB, U+25CF, U+2713-2714, U+2717-2718, U+276F;
+}

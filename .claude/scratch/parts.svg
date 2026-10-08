@@ -1,0 +1,63 @@
+<svg class="parts" viewBox="0 0 452 172" role="img" aria-labelledby="parts-t parts-d">
+      <title id="parts-t">The same agent on two machines</title>
+      <desc id="parts-d">One agent's parts, stacked top to bottom, on two machines side by
+      side. Model opus-5 on both. Plugins caveman 1.0.0 against 0.9.2. Harness claude-code
+      2.1.284 against 2.0.9. Commands python 3.12.8 against 3.9.6. No sandbox on either.
+      Operating system darwin 25 against ubuntu 24.04. Four of the six differ.</desc>
+      <text class="parts__machine" x="10" y="16">Machine A</text>
+      <text class="parts__machine" x="292" y="16">Machine B</text>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="28" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="28" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="28" width="170" height="22"/>
+        <text class="parts__value" x="10" y="39" dominant-baseline="middle">opus-5</text>
+        <text class="parts__value" x="292" y="39" dominant-baseline="middle">opus-5</text>
+        <path class="parts__whisker" d="M170 39 h16 M266 39 h16"/>
+        <text class="parts__label" x="226" y="39" text-anchor="middle" dominant-baseline="middle">Model</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="50" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="50" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="50" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="61" dominant-baseline="middle">caveman 1.0.0</text>
+        <text class="parts__value parts__value--diff" x="292" y="61" dominant-baseline="middle">caveman 0.9.2</text>
+        <path class="parts__whisker" d="M170 61 h16 M266 61 h16"/>
+        <text class="parts__label" x="226" y="61" text-anchor="middle" dominant-baseline="middle">Plugins</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="72" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="72" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="72" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="83" dominant-baseline="middle">claude-code 2.1.284</text>
+        <text class="parts__value parts__value--diff" x="292" y="83" dominant-baseline="middle">claude-code 2.0.9</text>
+        <path class="parts__whisker" d="M170 83 h16 M266 83 h16"/>
+        <text class="parts__label" x="226" y="83" text-anchor="middle" dominant-baseline="middle">Harness</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="94" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="94" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="94" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="105" dominant-baseline="middle">python 3.12.8</text>
+        <text class="parts__value parts__value--diff" x="292" y="105" dominant-baseline="middle">python 3.9.6</text>
+        <path class="parts__whisker" d="M170 105 h16 M266 105 h16"/>
+        <text class="parts__label" x="226" y="105" text-anchor="middle" dominant-baseline="middle">Commands</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="116" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="116" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="116" width="170" height="22"/>
+        <text class="parts__value" x="10" y="127" dominant-baseline="middle">none</text>
+        <text class="parts__value" x="292" y="127" dominant-baseline="middle">none</text>
+        <path class="parts__whisker" d="M170 127 h16 M266 127 h16"/>
+        <text class="parts__label" x="226" y="127" text-anchor="middle" dominant-baseline="middle">Sandbox</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="138" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="138" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="138" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="149" dominant-baseline="middle">darwin 25</text>
+        <text class="parts__value parts__value--diff" x="292" y="149" dominant-baseline="middle">ubuntu 24.04</text>
+        <path class="parts__whisker" d="M170 149 h16 M266 149 h16"/>
+        <text class="parts__label" x="226" y="149" text-anchor="middle" dominant-baseline="middle">OS</text>
+      </g>
+    </svg>

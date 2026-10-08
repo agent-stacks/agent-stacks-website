@@ -1,0 +1,530 @@
+/* ==========================================================================
+   components.css — every component on agent-stacks.org.
+
+   Rules:
+     1. No literal values. Everything is var(--…) from tokens.css.
+     2. Every class here must appear in components.html so it can be reviewed
+        in isolation. check-site.py fails the build otherwise.
+     3. Changing how something looks is an edit HERE, never in index.html.
+
+   The motif: the page renders like a document in a pager. Headings carry a
+   literal # prefix, quotes carry >, lists carry -, commands sit behind $.
+   ========================================================================== */
+
+/* --- base --------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--s-8); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--selection); color: var(--text); }
+
+/* Links are always underlined. Never override this. */
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: var(--focus-off);
+}
+a:hover { text-decoration-thickness: var(--focus-w); }
+
+:focus-visible {
+  outline: var(--focus-w) solid var(--accent);
+  outline-offset: var(--focus-off);
+  border-radius: var(--radius);
+}
+
+p { margin: 0 0 var(--s-3); max-width: var(--measure); }
+strong { font-weight: var(--fw-bold); color: var(--text); }
+code { font-family: var(--font); font-size: var(--fs-code); color: var(--text); }
+
+/* --- skip link ---------------------------------------------------------- */
+.skip {
+  position: absolute; left: var(--s-2); top: var(--s-2);
+  z-index: 2;
+  padding: var(--s-2) var(--s-3);
+  background: var(--panel); color: var(--text);
+  border: var(--hair) solid var(--line-2); border-radius: var(--radius);
+  transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
+
+/* --- layout ------------------------------------------------------------- */
+.wrap {
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--pad-x);
+}
+.wrap--wide { max-width: var(--maxw-wide); }
+
+.section { padding-block: var(--s-4); }
+
+.measure { max-width: var(--measure); }
+
+.rule { border: 0; border-top: var(--hair) solid var(--line); margin-block: var(--s-5); }
+
+/* --- headings: the # prefix --------------------------------------------
+   content: "##" / "" sets empty alt text, so screen readers hear the
+   heading and not the punctuation.
+   ------------------------------------------------------------------------ */
+.doc-h1, .doc-h2, .doc-h3 {
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-head);
+  max-width: var(--measure);
+  margin: 0 0 var(--s-3);
+  text-wrap: balance;
+}
+.doc-h1 { font-size: var(--fs-h1); }
+.doc-h2 { font-size: var(--fs-h2); margin-bottom: var(--s-4); }
+.doc-h3 { font-size: var(--fs-h3); margin-bottom: var(--s-2); }
+
+.doc-h1::before, .doc-h2::before, .doc-h3::before {
+  color: var(--accent);
+  font-weight: var(--fw-regular);
+  margin-right: var(--s-2);
+}
+/* The trailing space is one monospace cell, so the gap after the prefix scales
+   with the heading instead of staying a fixed 8px at every size. */
+.doc-h1::before { content: "# " / ""; }
+.doc-h2::before { content: "## " / ""; }
+.doc-h3::before { content: "### " / ""; }
+
+.lede {
+  font-size: var(--fs-lede);
+  line-height: var(--lh-code);
+  color: var(--text);
+  max-width: var(--measure);
+  margin: 0 0 var(--s-4);
+}
+
+/* --- label: the uppercase mono tag used above blocks and in diagrams ----- */
+.label {
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: var(--fw-medium);
+}
+
+/* --- quote: the > marker ------------------------------------------------ */
+.quote {
+  margin: 0 0 var(--s-4);
+  padding-left: var(--s-3);
+  border-left: var(--focus-w) solid var(--line-2);
+  color: var(--muted);
+  max-width: var(--measure);
+}
+.quote p { margin-bottom: var(--s-2); }
+.quote p:last-child { margin-bottom: 0; }
+.quote__cite { display: block; font-size: var(--fs-small); color: var(--muted); }
+
+/* --- list: the - marker ------------------------------------------------- */
+.list { list-style: none; margin: 0 0 var(--s-4); padding: 0; max-width: var(--measure); }
+.list li { padding-left: var(--s-4); margin-bottom: var(--s-2); position: relative; }
+.list li::before {
+  content: "-" / "";
+  position: absolute; left: 0;
+  color: var(--accent);
+}
+
+/* --- term: the terminal block ------------------------------------------- */
+.term {
+  position: relative;
+  background: var(--panel);
+  border: var(--hair) solid var(--line);
+  border-radius: var(--radius);
+  margin: 0 0 var(--s-4);
+  overflow: hidden;
+}
+.term__label {
+  display: block;
+  background: var(--panel-2);
+  padding: var(--s-2) var(--s-3);
+  border-bottom: var(--hair) solid var(--line);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: var(--fw-medium);
+}
+/* The body is not the scroller; each line is. That keeps the copy button
+   anchored to the block instead of sliding away under a long command. */
+.term__body { position: relative; padding: var(--s-3); }
+.term__cmd {
+  display: block;
+  overflow-x: auto;
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+  color: var(--text);
+  font-weight: var(--fw-medium);
+  white-space: pre;
+}
+.term__cmd::before { content: "$ " / ""; color: var(--accent); }
+.term__out {
+  display: block;
+  overflow-x: auto;
+  margin: 0;
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+  color: var(--muted);
+  white-space: pre;
+}
+.term__out + .term__cmd { margin-top: var(--s-3); }
+.term__note {
+  display: block;
+  padding: var(--s-2) var(--s-3);
+  border-top: var(--hair) solid var(--line);
+  font-size: var(--fs-small);
+  color: var(--muted);
+}
+/* Ships hidden and is unhidden by script: a copy button that cannot copy is
+   worse than no button, so without JS it never appears. */
+.term__copy {
+  position: absolute;
+  /* sits on the first command line, not in the header: back out the button's
+     own padding and border so its text aligns with the command's */
+  top: calc(var(--s-3) - var(--s-1) - var(--hair));
+  right: var(--s-3);
+  font: inherit;
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  font-weight: var(--fw-medium);
+  color: var(--muted);
+  background: var(--panel-2);
+  border: var(--hair) solid var(--line-2);
+  border-radius: var(--radius);
+  padding: var(--s-1) var(--s-2);
+  cursor: pointer;
+}
+.term__copy:hover { color: var(--accent); border-color: var(--accent); }
+.term__copy[data-done] { color: var(--accent); border-color: var(--accent); }
+
+.term--bare { background: none; border: 0; }
+.term--bare .term__body { padding-inline: 0; }
+/* a bare block has no horizontal padding, so the button follows the text edge */
+.term--bare .term__copy { right: 0; }
+
+/* --- tree: a file listing ----------------------------------------------- */
+.tree {
+  margin: 0 0 var(--s-4);
+  padding: var(--s-3);
+  background: var(--panel);
+  border: var(--hair) solid var(--line);
+  border-radius: var(--radius);
+  font-size: var(--fs-code);
+  line-height: var(--lh-code);
+  color: var(--muted);
+  overflow-x: auto;
+  white-space: pre;
+}
+.tree__n { color: var(--text); font-weight: var(--fw-regular); }
+.tree__c { color: var(--muted); }
+
+/* --- ledger: one component, two tenses ----------------------------------
+   The page does not use it at present. It carried the list of what a stack
+   gives you, which was cut, and the roadmap, which is now the status diagram
+   (.parts, further down). It stays in the gallery for a list that needs it:
+   state is carried by a glyph AND a word, never by color alone.
+   ------------------------------------------------------------------------ */
+.ledger { margin: 0 0 var(--s-4); border-top: var(--hair) solid var(--line); }
+.ledger__row {
+  display: grid;
+  grid-template-columns: var(--s-4) 1fr auto;
+  gap: var(--s-2) var(--s-3);
+  align-items: baseline;
+  padding-block: var(--s-3);
+  border-bottom: var(--hair) solid var(--line);
+}
+.ledger__mark { font-weight: var(--fw-medium); }
+.ledger__name { color: var(--text); font-weight: var(--fw-medium); }
+.ledger__note {
+  grid-column: 2 / -1;
+  font-size: var(--fs-small);
+  color: var(--muted);
+  max-width: var(--measure);
+}
+.ledger__state {
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.ledger__row--shipped .ledger__mark { color: var(--accent); }
+.ledger__row--next    .ledger__mark { color: var(--line-2); }
+.ledger__row--later   .ledger__mark { color: var(--line-2); }
+.ledger__row--later .ledger__name { color: var(--muted); font-weight: var(--fw-regular); }
+
+/* --- impl: who has implemented the spec --------------------------------- */
+.impl { margin: 0 0 var(--s-4); border-top: var(--hair) solid var(--line); }
+.impl__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--s-2) var(--s-3);
+  align-items: baseline;
+  padding-block: var(--s-3);
+  border-bottom: var(--hair) solid var(--line);
+}
+.impl__name { color: var(--text); font-weight: var(--fw-medium); }
+.impl__note { grid-column: 1 / -1; font-size: var(--fs-small); color: var(--muted); max-width: var(--measure); }
+.impl__state {
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.impl__row--open { border-bottom-style: dashed; }
+.impl__row--open .impl__name { color: var(--muted); font-weight: var(--fw-regular); }
+
+/* --- persona: where you sit --------------------------------------------- */
+.persona { margin: 0; }
+.persona__row { padding-block: var(--s-4); border-top: var(--hair) solid var(--line); }
+.persona__who { color: var(--text); font-weight: var(--fw-bold); margin: 0 0 var(--s-1); }
+.persona__what { color: var(--muted); margin: 0 0 var(--s-3); max-width: var(--measure); }
+
+/* --- diagram ------------------------------------------------------------ */
+.diagram { margin: 0 0 var(--s-5); }
+.diagram__scroll { overflow-x: auto; padding-block: var(--s-3); }
+.diagram__scroll svg { display: block; min-width: var(--maxw); margin-inline: auto; }
+.diagram figcaption {
+  font-size: var(--fs-small);
+  color: var(--muted);
+  max-width: var(--measure);
+  margin-top: var(--s-3);
+}
+.dg-line  { stroke: var(--line-2); stroke-width: var(--hair); fill: none; }
+.dg-box   { stroke: var(--line-2); stroke-width: var(--hair); fill: var(--panel); }
+.dg-box--open { stroke-dasharray: 3 3; fill: none; }
+.dg-box--emph { stroke: var(--accent); fill: var(--accent-wash); }
+.dg-label {
+  fill: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  font-weight: var(--fw-medium);
+}
+.dg-label--muted { fill: var(--muted); }
+.dg-label--accent { fill: var(--accent); }
+
+/* --- parts: the layers an agent is made of -------------------------------
+   SVG this time, unlike the first version. The labels sit outside the stack
+   on leader lines, which is geometry, and geometry is what SVG is for. It
+   also lets the bars themselves shrink to almost nothing -- the diagram is
+   half the size it was with the labels inside.
+
+   Top to bottom is not a list order. The rationale for it -- not a claim the
+   page makes, because it is only partly true -- is that every layer is
+   roughly bounded by the one below it: the model can only use the tools exposed to it, those
+   tools are loaded by the harness, the harness can only run the commands
+   available to it, and those commands are whatever the sandbox provides --
+   not whatever the host happens to have. One rule all the way down, which is
+   also the project's thesis.
+
+   Secrets sits last and outside that chain. It is not bounded by the sandbox
+   or anything else in the stack; it is what the agent is trusted with. The
+   roadmap draws the same layers in the same order.
+
+   Keep the edges meaning one thing. Putting the harness above the model
+   instead, because the harness calls the model, makes that edge mean the
+   opposite of every other edge in the diagram.
+
+   The layers sit flush, sharing an edge, so a highlighted layer's stroke
+   lands exactly on its neighbours'. A small script re-appends the hovered
+   layer so it paints last and its outline wins -- SVG has no z-index, and
+   nothing moves, since every bar is placed by x and y.
+
+   The highlight is decorative only. Everything the diagram says is in its
+   <desc>, so there is nothing a pointer reveals that a screen reader misses,
+   and no reason to put six tab stops in the page.
+   ------------------------------------------------------------------------ */
+.parts { display: block; width: var(--parts-w); max-width: 100%; height: auto;
+  margin-inline: auto; }
+
+/* The same agent for two users. The layer cake is still the spine; each bar
+   just carries what that layer actually is for that user. Only the values
+   that differ take the accent, so the count of differences is scannable
+   without reading a word of it.
+
+   The OS is not drawn, on purpose. A stack does not ship one (BRAND.md §4),
+   and leaving it out is what lets the lede under the diagram say a stack
+   ships "all of these parts". */
+.parts__value {
+  fill: var(--muted);
+  font-family: var(--font);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-regular);
+}
+.parts__value--diff { fill: var(--accent); font-weight: var(--fw-medium); }
+.parts__machine {
+  fill: var(--muted);
+  font-family: var(--font);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  font-weight: var(--fw-medium);
+}
+.parts__bar {
+  fill: var(--panel);
+  stroke: var(--line-2);
+  stroke-width: var(--hair);
+}
+.parts__whisker {
+  stroke: var(--line-2);
+  stroke-width: var(--hair);
+  fill: none;
+}
+.parts__label {
+  fill: var(--muted);
+  font-family: var(--font);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;   /* matches .dg-label on the other diagram */
+  font-weight: var(--fw-medium);
+}
+/* an invisible full-width band per layer, so the whole row is hoverable and
+   not just the ink. fill:none would take no pointer events at all. */
+.parts__hit { fill: transparent; }
+
+/* Both selectors on purpose. Re-appending a node under the cursor drops its
+   :hover state, so the script drives --on explicitly and clears it from the
+   diagram's own mouseover/mouseleave. :hover alone still works with no
+   script, minus the raise. */
+.parts__layer:hover .parts__bar,
+.parts__layer--on .parts__bar { fill: var(--accent-wash); stroke: var(--accent); }
+.parts__layer:hover .parts__whisker,
+.parts__layer--on .parts__whisker { stroke: var(--accent); }
+.parts__layer:hover .parts__label,
+.parts__layer--on .parts__label { fill: var(--accent); }
+.parts__layer:hover .parts__value,
+.parts__layer--on .parts__value { fill: var(--accent); }
+
+/* The roadmap is the same stack drawn once, with a status on every layer in
+   place of a second machine. Three states, each carried by the outline AND a
+   word, never by color alone:
+
+     today        accent outline, "Today" in accent     --shipped
+     in progress  the plain bar, as in the hero         (no modifier)
+     planned      dashed outline, no fill, muted text   --later
+
+   --shipped and --later are the ledger's names for the same two states. A
+   value takes --solid when its layer exists or is being built, and stays
+   muted when it is only planned.
+
+   These bars sit outside any .parts__layer, so they do not take the hover
+   highlight: a highlight would read as a fourth status. */
+.parts__bar--shipped { stroke: var(--accent); }
+.parts__bar--later { fill: none; stroke-dasharray: 3 3; }
+.parts__value--solid { fill: var(--text); }
+.parts__label--shipped { fill: var(--accent); }
+
+/* --- header ------------------------------------------------------------- */
+.site-head {
+  border-bottom: var(--hair) solid var(--line);
+  background: var(--ground);
+  position: sticky; top: 0; z-index: 1;
+}
+.site-head__in {
+  display: flex; align-items: center; gap: var(--s-4);
+  padding-block: var(--s-3);
+}
+.brand {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  color: var(--text); text-decoration: none; font-weight: var(--fw-bold);
+  white-space: nowrap;   /* two words now; on a phone the name must not split */
+}
+.brand:hover { color: var(--accent); }
+.brand__mark { width: var(--mark); height: var(--mark); display: block; flex: none; }
+.brand__mark .solid { fill: var(--accent); }
+.brand__mark .hollow { fill: none; stroke: var(--accent); stroke-width: 10; stroke-linejoin: miter; }
+
+.nav { margin-left: auto; display: flex; gap: var(--s-4); font-size: var(--fs-small); }
+.nav a { color: var(--muted); }
+.nav a:hover, .nav a:focus-visible { color: var(--accent); }
+
+/* Under 40rem the links no longer fit beside the name, so all of them move
+   into a menu behind this button. It ships hidden and is unhidden by script;
+   aria-expanded is the only state, and the rules below read it. The negative
+   margins give the button a finger-sized target without making the bar
+   taller. */
+.nav-toggle {
+  display: none;
+  margin: calc(var(--s-2) * -1);
+  margin-left: auto;
+  padding: var(--s-2);
+  border: 0; background: none; color: var(--muted);
+  cursor: pointer;
+}
+.nav-toggle:hover, .nav-toggle[aria-expanded="true"] { color: var(--accent); }
+.nav-toggle__icon {
+  display: block; width: var(--icon); height: var(--icon);
+  fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: square;
+}
+.nav-toggle[aria-expanded="false"] .nav-toggle__x,
+.nav-toggle[aria-expanded="true"] .nav-toggle__bars { display: none; }
+
+@media (max-width: 40rem) {
+  /* without script: the links wrap onto their own row under the name */
+  .site-head__in { flex-wrap: wrap; row-gap: var(--s-2); }
+  .nav { flex-basis: 100%; flex-wrap: wrap; margin-left: 0; row-gap: var(--s-2); }
+
+  /* with script: the links hang below the bar, over the page, so opening the
+     menu moves nothing underneath it */
+  .nav-toggle:not([hidden]) { display: block; }
+  .nav-toggle:not([hidden]) ~ .nav {
+    position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; flex-wrap: nowrap; gap: 0;
+    padding: var(--s-2) var(--pad-x) var(--s-3);
+    background: var(--ground);
+    border-bottom: var(--hair) solid var(--line);
+  }
+  .nav-toggle:not([hidden]) ~ .nav a { padding-block: var(--s-2); }
+  .nav-toggle[aria-expanded="false"]:not([hidden]) ~ .nav { display: none; }
+}
+
+/* --- footer ------------------------------------------------------------- */
+.site-foot { border-top: var(--hair) solid var(--line); margin-top: var(--s-6); }
+.site-foot__in {
+  padding-block: var(--s-5) var(--s-7);
+  display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4);
+  font-size: var(--fs-small); color: var(--muted);
+}
+.site-foot__in a { color: var(--muted); }
+.site-foot__in a:hover { color: var(--accent); }
+.site-foot__end { margin-left: auto; }
+
+/* --- gallery-only: the component review harness -------------------------- */
+.gal { padding-block: var(--s-6); border-top: var(--hair) solid var(--line); }
+.gal__bar {
+  display: flex; align-items: center; gap: var(--s-3);
+  padding-block: var(--s-3);
+  border-bottom: var(--hair) solid var(--line);
+  position: sticky; top: 0; z-index: 1; background: var(--ground);
+}
+.gal__btn {
+  font: inherit; font-size: var(--fs-small);
+  color: var(--text); background: var(--panel);
+  border: var(--hair) solid var(--line-2); border-radius: var(--radius);
+  padding: var(--s-1) var(--s-3); cursor: pointer;
+}
+.gal__btn:hover { border-color: var(--accent); color: var(--accent); }
+.gal__name {
+  font-size: var(--fs-label); letter-spacing: var(--ls-label);
+  text-transform: uppercase; color: var(--accent);
+  font-weight: var(--fw-medium);
+  margin: 0 0 var(--s-3);
+}
+.gal__note { font-size: var(--fs-small); color: var(--muted); margin: 0 0 var(--s-4); max-width: var(--measure); }

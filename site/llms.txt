@@ -1,0 +1,144 @@
+# Agent Stacks
+
+> An open specification for an agent's parts on disk: the harness, its plugins, and the
+> runtimes both need, as one unit that runs the same way on every machine. Specification
+> 0.1.0 is a draft and will change.
+
+An agent is composed of many parts. Top to bottom: the model, its plugins, the harness, the
+commands the harness can run, the sandbox that provides them, and the secrets the agent may
+use. No two agents have all of the same parts, so behavior differs from user to user.
+
+Agent Stacks is an open specification for shipping all of these parts as one unit.
+
+## What problem does this solve?
+
+Imagine that you use the caveman plugin. Its compression skill requires Python 3.10 or newer.
+However, your machine has Python 3.9.6, so the skill fails when the agent runs it.
+
+Most agents are managed like this, as bespoke snowflakes. In contrast, an agent stack defines
+all of the parts in code so they run the same everywhere.
+
+## Try a reference implementation
+
+Nix reference implementation:
+
+    nix run github:agent-stacks/claude-code
+
+Needs Nix with flakes. Compatible with x86_64-linux, aarch64-linux, aarch64-darwin. Intel Mac
+is not supported. You do not need the agent, Python, or Agent Stacks installed first.
+
+The command above puts one directory on your machine with all of the parts, then launches
+the agent stack.
+
+    agent-stack-claude-code/
+    ├── bin/claude-code       # the launcher for the stack
+    └── share/agent-plugins/
+        ├── caveman/          # plugin
+        │   ├── plugin.json
+        │   ├── skills/caveman-compress/scripts/compress.py
+        │   └── bin/python3   # the runtime for compress.py
+        └── agentmemory/      # plugin
+            ├── plugin.json
+            ├── mcp.json
+            ├── skills/
+            └── bin/npx       # the runtime for mcp.json's command
+
+## Where to start
+
+- I use a harness every day. You can use Agent Stacks to manage the configuration of your
+  existing harness (Claude Code, Codex, Pi). Developer quick start:
+  https://github.com/agent-stacks/agent-pkgs#quick-start
+- I manage agents for a team. You can use Agent Stacks to define the harness and plugins for
+  a team and keep them current. Create an agent stack:
+  https://github.com/agent-stacks/agent-pkgs/blob/main/docs/guides/create-agent-stack.md
+- I write skills or MCP servers. You can use Agent Stacks to package skills or MCP servers
+  together with their dependencies, so they run the same everywhere. Create an agent plugin:
+  https://github.com/agent-stacks/agent-pkgs/blob/main/docs/guides/create-agent-plugin.md
+
+## What's on the roadmap?
+
+The Agent Stacks stack is in active development. It currently supports plugins, harnesses,
+and commands, with new features coming soon.
+
+- Model: local models and model routing. Planned.
+- Plugins: skills and MCP servers. Today.
+- Plugins: hooks, rules, and subagents. In progress.
+- Harness: claude, codex, opencode, pi, agent-deck. Today.
+- Commands: interpreters such as python3 and npx. Today. The specification calls these
+  runtimes.
+- Sandbox: what the agent can reach. In progress.
+- Secrets: credentials the agent may use. Planned.
+
+We are looking for contributors, especially for native support in more package managers and
+more harnesses. See "Open development" below for how to get involved.
+
+## What the specification says
+
+The website no longer summarizes the specification. This section is kept here for reference.
+
+It defines no requirements of its own. Every MUST comes from one of the three specifications
+it composes: Agent Plugins (the plugin package), Agent Skills (what a skill is), and MCP (how
+a plugin's servers behave on the wire). On top of those it recommends:
+
+- A stack is one directory.
+- It has exactly one harness and any number of plugins. To run two harnesses, build two
+  stacks.
+- Each plugin gets its own directory at share/agent-plugins/<name>/.
+- There is one launcher, at bin/<stack-name>.
+- The layout is harness-neutral. The launcher adapts it to the harness every time it runs.
+- A stack is transportable as one unit. Copy it with its dependencies to a machine that has
+  none of its runtimes installed, and it still runs. The specification calls this the point
+  of the whole document.
+
+A stack decides what the agent brings with it, and has no say over what the agent reaches
+once it is running. The launcher puts the stack's harness first on PATH and leaves the rest
+alone, so an agent that runs git gets the host's git.
+
+The build finds a runtime only in a script's shebang or an MCP server's command. A SKILL.md
+that tells the agent to run rg still depends on the host's rg.
+
+A stack is explicitly NOT a sandbox, NOT a package manager, and NOT a per-harness
+configuration tree. There is no stack-level manifest, so the spec version a stack was built
+against is not discoverable on disk.
+
+## Vocabulary
+
+The website says "harness". The specification says "agent client", a term from Agent Plugins.
+They mean the same thing, and the specification lets an implementation use whichever name
+its users know.
+
+## Current numbers
+
+- 307 plugin packages in agent-pkgs.
+- 5 harnesses can be a stack's harness today: agent-deck, claude, codex, opencode, pi.
+- ~170 agent CLIs are packaged by numtide/llm-agents.nix, of which 56 are classified as
+  agents. Do not confuse that catalogue with the five that work as a stack harness.
+
+## Open development
+
+Agent Stacks is developed in public. Flox is the initial sponsor and wrote the first
+implementation, and we are looking for contributors and collaborators. We are not attached to
+any particular technology. The specification is a layout on disk; Nix is just one way to
+produce it.
+
+If you are packaging agent tooling already, or you maintain a harness that has to load
+components, we are open to collaborating: https://go.flox.dev/slack
+
+## Links
+
+- Specification: https://github.com/agent-stacks/agent-stacks-spec
+- Reference implementation (Nix): https://github.com/agent-stacks/agent-pkgs
+- Developer quick start: https://github.com/agent-stacks/agent-pkgs#quick-start
+- Create an agent plugin: https://github.com/agent-stacks/agent-pkgs/blob/main/docs/guides/create-agent-plugin.md
+- Create an agent stack: https://github.com/agent-stacks/agent-pkgs/blob/main/docs/guides/create-agent-stack.md
+- Agent Plugins: https://agent-plugins.org
+- Agent Skills: https://agentskills.io
+- MCP: https://modelcontextprotocol.io
+- Chat: https://go.flox.dev/slack (#agent-stacks)
+
+## Binary cache
+
+    extra-substituters = https://cache.agent-stacks.org
+    extra-trusted-public-keys = agent-stacks-1:RWT4eI3clOY7jhOzIQNTyXL1Z8yQpN3KlNvvPMfFCRk=
+
+License: specification text CC BY 4.0, code MIT.

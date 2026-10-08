@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Components — Agent Stacks</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+</head>
+<body>
+
+<a class="skip" href="#gallery">Skip to components</a>
+
+<div class="wrap wrap--wide">
+  <div class="gal__bar">
+    <span class="gal__name">Component gallery</span>
+    <button class="gal__btn" type="button" id="theme">Theme: system</button>
+    <span class="label" id="now"></span>
+  </div>
+</div>
+
+<main class="wrap wrap--wide" id="gallery">
+
+<h1 class="doc-h1">Components</h1>
+<p class="gal__note">Every class in <code>components.css</code>, in every state, loading the same
+two stylesheets as the live page. Change how something looks here and the page changes with it.
+Nothing on this page is real copy — see <code>index.html</code> for that.</p>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">doc-h1 · doc-h2 · doc-h3 · lede · measure · rule</p>
+  <p class="doc-h1">A level one heading</p>
+  <p class="lede">A lede. Slightly larger, a little tighter, and capped at the same measure as
+  everything else so the eye never has to travel further than it should.</p>
+  <h2 class="doc-h2">A level two heading</h2>
+  <p class="measure">Body prose at sixteen pixels with a line-height of 1.75, hard-capped at
+  seventy-two characters. Monospace is only readable if you give it room, so neither number
+  should be tightened without looking at the result on a wide display first.</p>
+  <h3 class="doc-h3">A level three heading</h3>
+  <p>Body prose inherits the measure cap without needing the class.</p>
+  <hr class="rule">
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">label · chip · chip--accent</p>
+  <p><span class="label">Uppercase label</span></p>
+  <p>
+    <span class="chip">Spec 0.1.0 · Draft</span>
+    <span class="chip chip--accent">Accented chip</span>
+  </p>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">quote · quote__cite · list</p>
+  <blockquote class="quote">
+    <p>No two machines run quite the same agent.</p>
+    <span class="quote__cite">agent-pkgs/README.md</span>
+  </blockquote>
+  <ul class="list">
+    <li>A list item, marked with a dash in the accent color.</li>
+    <li>A second item, long enough to wrap onto a second line so the hanging indent can be
+      checked against the marker.</li>
+    <li><strong>A bolded lead-in.</strong> Followed by ordinary prose.</li>
+  </ul>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">term · term__label · term__cmd · term__out · term__note</p>
+  <div class="term">
+    <span class="term__label">Run someone else's stack</span>
+    <div class="term__body">
+      <button class="term__copy" type="button" hidden>copy</button>
+      <code class="term__cmd">nix run github:agent-stacks/claude-code</code>
+      <pre class="term__out">claude-code 2.1.284
+20 skills loaded from caveman</pre>
+      <code class="term__cmd">./result/bin/try --version</code>
+      <pre class="term__out">2.1.284 (Claude Code)</pre>
+    </div>
+    <span class="term__note">A note under the block, for a caveat the command itself cannot carry.</span>
+  </div>
+
+  <p class="gal__name">term--bare</p>
+  <div class="term term--bare">
+    <div class="term__body">
+      <button class="term__copy" type="button" hidden>copy</button>
+      <code class="term__cmd">ls pkgs/ | wc -l</code>
+      <pre class="term__out">308</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">tree · tree__n · tree__c</p>
+<pre class="tree"><span class="tree__n">agent-stack-claude-code/</span>
+├── bin/
+│   └── <span class="tree__n">claude-code</span>             <span class="tree__c"># the launcher</span>
+└── share/
+    └── agent-plugins/
+        └── <span class="tree__n">caveman/</span>            <span class="tree__c"># unchanged from the plugin package</span>
+            ├── plugin.json
+            ├── skills/             <span class="tree__c"># 20 skills</span>
+            └── bin/                <span class="tree__c"># pinned interpreters</span></pre>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">ledger · ledger__row--shipped / --next / --later</p>
+  <p class="gal__note">One component, two tenses. A row moves from <code>--next</code> to
+  <code>--shipped</code> when the capability lands. State is carried by a glyph and a word,
+  never by color alone.</p>
+  <div class="ledger">
+    <div class="ledger__row ledger__row--shipped">
+      <span class="ledger__mark" aria-hidden="true">✔</span>
+      <span class="ledger__name">Pinned harness</span>
+      <span class="ledger__note">The agent and the runtime it runs on, in the dependency set.</span>
+    </div>
+    <div class="ledger__row ledger__row--next">
+      <span class="ledger__mark" aria-hidden="true">○</span>
+      <span class="ledger__name">Hooks</span>
+      <span class="ledger__state">Future</span>
+      <span class="ledger__note">Agent Plugins defers hooks until formats converge.</span>
+    </div>
+    <div class="ledger__row ledger__row--later">
+      <span class="ledger__mark" aria-hidden="true">○</span>
+      <span class="ledger__name">Sandbox configuration</span>
+      <span class="ledger__state">Future, later</span>
+      <span class="ledger__note">Sandbox formats are fragmented, so there is nothing to
+        standardize on yet.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">impl · impl__row · impl__row--open</p>
+  <div class="impl">
+    <div class="impl__row">
+      <span class="impl__name">Nix — agent-pkgs</span>
+      <span class="impl__state">Available</span>
+      <span class="impl__note">The reference implementation. 307 plugins, built by CI.</span>
+    </div>
+    <div class="impl__row impl__row--open">
+      <span class="impl__name">Your package manager</span>
+      <span class="impl__state">Open</span>
+      <span class="impl__note">The empty-slot state. Dashed rule, muted name.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">persona · persona__row · persona__who · persona__what</p>
+  <div class="persona">
+    <div class="persona__row">
+      <p class="persona__who">Agent users</p>
+      <p class="persona__what">You want to run the thing, not assemble it.</p>
+      <div class="term term--bare">
+        <div class="term__body">
+      <button class="term__copy" type="button" hidden>copy</button><code class="term__cmd">nix run github:agent-stacks/claude-code</code></div>
+      </div>
+    </div>
+    <div class="persona__row">
+      <p class="persona__who">Agent part authors</p>
+      <p class="persona__what">You maintain skills or an MCP server and want them to travel.</p>
+      <div class="term term--bare">
+        <div class="term__body">
+      <button class="term__copy" type="button" hidden>copy</button><code class="term__cmd">agent-stacks import your-org/your-skills</code></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">parts · parts__machine · parts__layer · parts__bar · parts__value · parts__value--diff · parts__whisker · parts__label · parts__hit</p>
+  <p class="gal__note">Labels sit outside on leader lines, so the bars themselves can be tiny.
+  Top to bottom is not a list order; see the rationale in <code>components.css</code>. Hover a row — the whole band is a hit target, not just the ink. The highlight is
+  decorative; everything the diagram says is in its <code>&lt;desc&gt;</code>. Carries no status:
+  every layer is drawn the same. Values that differ take the accent. A row whose two values
+  match stays muted, like the first one here; on the page every row differs.</p>
+  <figure class="diagram">
+    <p class="label" id="gal-parts">Agent architecture</p>
+    <svg class="parts" viewBox="0 0 452 172" role="img" aria-labelledby="parts-t parts-d">
+      <title id="parts-t">The same agent for two users</title>
+      <desc id="parts-d">One agent's parts, stacked top to bottom, for two users side by
+      side. Model opus-5 on both. Plugins caveman 1.0.0 against 0.9.2. Harness claude-code
+      2.1.284 against 2.0.9. Commands python 3.12.8 against 3.9.6. Sandbox none against docker.
+      Secrets keychain against .env file. Five of the six differ.</desc>
+      <text class="parts__machine" x="10" y="16">User A</text>
+      <text class="parts__machine" x="292" y="16">User B</text>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="28" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="28" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="28" width="170" height="22"/>
+        <text class="parts__value" x="10" y="39" dominant-baseline="middle">opus-5</text>
+        <text class="parts__value" x="292" y="39" dominant-baseline="middle">opus-5</text>
+        <path class="parts__whisker" d="M170 39 h16 M266 39 h16"/>
+        <text class="parts__label" x="226" y="39" text-anchor="middle" dominant-baseline="middle">Model</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="50" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="50" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="50" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="61" dominant-baseline="middle">caveman 1.0.0</text>
+        <text class="parts__value parts__value--diff" x="292" y="61" dominant-baseline="middle">caveman 0.9.2</text>
+        <path class="parts__whisker" d="M170 61 h16 M266 61 h16"/>
+        <text class="parts__label" x="226" y="61" text-anchor="middle" dominant-baseline="middle">Plugins</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="72" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="72" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="72" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="83" dominant-baseline="middle">claude-code 2.1.284</text>
+        <text class="parts__value parts__value--diff" x="292" y="83" dominant-baseline="middle">claude-code 2.0.9</text>
+        <path class="parts__whisker" d="M170 83 h16 M266 83 h16"/>
+        <text class="parts__label" x="226" y="83" text-anchor="middle" dominant-baseline="middle">Harness</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="94" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="94" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="94" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="105" dominant-baseline="middle">python 3.12.8</text>
+        <text class="parts__value parts__value--diff" x="292" y="105" dominant-baseline="middle">python 3.9.6</text>
+        <path class="parts__whisker" d="M170 105 h16 M266 105 h16"/>
+        <text class="parts__label" x="226" y="105" text-anchor="middle" dominant-baseline="middle">Commands</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="116" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="116" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="116" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="127" dominant-baseline="middle">none</text>
+        <text class="parts__value parts__value--diff" x="292" y="127" dominant-baseline="middle">docker</text>
+        <path class="parts__whisker" d="M170 127 h16 M266 127 h16"/>
+        <text class="parts__label" x="226" y="127" text-anchor="middle" dominant-baseline="middle">Sandbox</text>
+      </g>
+      <g class="parts__layer">
+        <rect class="parts__hit" x="0" y="138" width="452" height="22"/>
+        <rect class="parts__bar" x="0" y="138" width="170" height="22"/>
+        <rect class="parts__bar" x="282" y="138" width="170" height="22"/>
+        <text class="parts__value parts__value--diff" x="10" y="149" dominant-baseline="middle">keychain</text>
+        <text class="parts__value parts__value--diff" x="292" y="149" dominant-baseline="middle">.env file</text>
+        <path class="parts__whisker" d="M170 149 h16 M266 149 h16"/>
+        <text class="parts__label" x="226" y="149" text-anchor="middle" dominant-baseline="middle">Secrets</text>
+      </g>
+    </svg>
+    <figcaption>A caption sits under the diagram at the small size, capped to the measure.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">parts, by status · parts__bar--shipped · parts__bar--later · parts__value--solid · parts__label--shipped</p>
+  <p class="gal__note">The roadmap's version of the stack: one cake, a status on every layer.
+  Today takes the accent outline, in progress is the plain bar, planned is dashed with no fill.
+  Each state is also spelled out at the right of its bar, so nothing depends on color. Bars are
+  drawn in status order so the stronger outline wins a shared edge. No hover highlight here.</p>
+  <figure class="diagram">
+    <svg class="parts" viewBox="0 0 452 74" role="img" aria-labelledby="gal-status-t gal-status-d">
+      <title id="gal-status-t">Three layers, one in each status</title>
+      <desc id="gal-status-d">A planned layer, a layer available today, and a layer in
+      progress, stacked top to bottom.</desc>
+      <rect class="parts__bar parts__bar--later" x="102" y="4" width="350" height="22"/>
+      <rect class="parts__bar" x="102" y="48" width="350" height="22"/>
+      <rect class="parts__bar parts__bar--shipped" x="102" y="26" width="350" height="22"/>
+      <path class="parts__whisker" d="M86 15 h16 M86 37 h16 M86 59 h16"/>
+      <text class="parts__label" x="78" y="15" text-anchor="end" dominant-baseline="middle">Model</text>
+      <text class="parts__value" x="112" y="15" dominant-baseline="middle">a planned layer</text>
+      <text class="parts__label" x="442" y="15" text-anchor="end" dominant-baseline="middle">Planned</text>
+      <text class="parts__label" x="78" y="37" text-anchor="end" dominant-baseline="middle">Harness</text>
+      <text class="parts__value parts__value--solid" x="112" y="37" dominant-baseline="middle">a layer that works today</text>
+      <text class="parts__label parts__label--shipped" x="442" y="37" text-anchor="end" dominant-baseline="middle">Today</text>
+      <text class="parts__label" x="78" y="59" text-anchor="end" dominant-baseline="middle">Sandbox</text>
+      <text class="parts__value parts__value--solid" x="112" y="59" dominant-baseline="middle">a layer in progress</text>
+      <text class="parts__label" x="442" y="59" text-anchor="end" dominant-baseline="middle">In progress</text>
+    </svg>
+  </figure>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">diagram · diagram__scroll · dg-line · dg-box · dg-box--open · dg-box--emph · dg-label</p>
+  <figure class="diagram">
+    <div class="diagram__scroll">
+      <svg viewBox="0 0 720 220" role="img" aria-label="Diagram primitives">
+        <rect class="dg-box" x="16" y="24" width="160" height="48" rx="4"/>
+        <text class="dg-label" x="96" y="53" text-anchor="middle">DG-BOX</text>
+
+        <rect class="dg-box dg-box--open" x="200" y="24" width="160" height="48" rx="4"/>
+        <text class="dg-label dg-label--muted" x="280" y="53" text-anchor="middle">OPEN SLOT</text>
+
+        <rect class="dg-box dg-box--emph" x="384" y="24" width="160" height="48" rx="4"/>
+        <text class="dg-label dg-label--accent" x="464" y="53" text-anchor="middle">EMPHASIS</text>
+
+        <path class="dg-line" d="M96 72 L96 128 L464 128 L464 72"/>
+        <path class="dg-line" d="M280 72 L280 128"/>
+        <text class="dg-label dg-label--muted" x="16" y="176">HAIRLINES INHERIT --line-2</text>
+        <text class="dg-label dg-label--muted" x="16" y="200">LABELS AT --fs-label, UPPERCASE</text>
+      </svg>
+    </div>
+    <figcaption>Every diagram is inline SVG on the same grid as the text, using currentColor
+    tokens so it themes for free. It scrolls inside this container; the page body never
+    scrolls sideways.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">site-head · site-head__in · brand · brand__mark · nav · nav-toggle ·
+  nav-toggle__icon · nav-toggle__bars · nav-toggle__x</p>
+  <p class="gal__note">Under 640px the links move behind the menu button. Narrow the window and
+  press it to see the open state. Without script the button never appears and the links wrap
+  under the name.</p>
+  <div class="site-head">
+    <div class="wrap site-head__in">
+      <a class="brand" href="#gallery">
+        <svg class="brand__mark" viewBox="0 0 200 200" aria-hidden="true">
+          <polygon class="solid"  points="78,40 122,40 130,48 130,60 122,68 78,68 70,60 70,48"/>
+        <polygon class="hollow" points="60,86 140,86 148,94 148,106 140,114 60,114 52,106 52,94"/>
+        <polygon class="solid"  points="42,132 158,132 166,140 166,152 158,160 42,160 34,152 34,140"/>
+        </svg>
+        Agent Stacks
+      </a>
+      <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" hidden>
+        <svg class="nav-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path class="nav-toggle__bars" d="M3 6h18M3 12h18M3 18h18"/>
+          <path class="nav-toggle__x" d="M5 5l14 14M19 5L5 19"/>
+        </svg>
+      </button>
+      <nav class="nav">
+        <a href="#gallery">0.1.0 spec</a>
+        <a href="#gallery">guides</a>
+        <a href="#gallery">packages</a>
+        <a href="#gallery">contribute</a>
+        <a href="#gallery">github</a>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">site-foot · site-foot__in · site-foot__end</p>
+  <div class="site-foot">
+    <div class="wrap site-foot__in">
+      <span>Agent Stacks &middot; v0.1.0</span>
+      <span class="site-foot__end">Spec CC&nbsp;BY&nbsp;4.0, code MIT. Initial sponsor:
+      <a href="#gallery">Flox</a>.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<section class="gal">
+  <p class="gal__name">skip</p>
+  <p class="gal__note">The skip link is the first focusable element on the page. Press Tab from
+  the address bar to see it; it is positioned off-screen until focused.</p>
+</section>
+
+</main>
+
+<script>
+(function () {
+  var btn = document.getElementById('theme');
+  var root = document.documentElement;
+  var modes = ['system', 'dark', 'light'];
+  var i = 0;
+  btn.addEventListener('click', function () {
+    i = (i + 1) % modes.length;
+    var m = modes[i];
+    if (m === 'system') { root.removeAttribute('data-theme'); }
+    else { root.setAttribute('data-theme', m); }
+    btn.textContent = 'Theme: ' + m;
+  });
+  document.getElementById('now').textContent =
+    'tokens.css + components.css — no build step';
+})();
+</script>
+
+<script>
+// Progressive enhancement. The buttons ship hidden and only appear when the
+// clipboard is actually available, so the page never shows a dead control.
+(function () {
+  // SVG has no z-index: paint order is document order. Re-appending the
+  // hovered layer puts its highlighted stroke over both neighbours' instead
+  // of butting against them. Nothing moves -- every bar is placed by x/y, so
+  // reordering changes only what paints on top.
+  //
+  // The listeners go on the diagram, not the layers. Moving a node out of the
+  // DOM and back drops the browser's hover tracking for it, so a layer's own
+  // mouseleave never arrives after it has been raised and every layer stays
+  // lit. The <svg> is never re-appended, so its events stay honest.
+  document.querySelectorAll('svg.parts').forEach(function (svg) {
+    var layers = Array.prototype.slice.call(svg.querySelectorAll('.parts__layer'));
+    function clear() {
+      layers.forEach(function (l) { l.classList.remove('parts__layer--on'); });
+    }
+    svg.addEventListener('mouseover', function (e) {
+      var layer = e.target.closest && e.target.closest('.parts__layer');
+      if (!layer) return;
+      clear();
+      layer.classList.add('parts__layer--on');
+      if (svg.lastElementChild !== layer) svg.appendChild(layer);
+    });
+    svg.addEventListener('mouseleave', clear);
+  });
+
+  // The menu button ships hidden too: without script it could open nothing,
+  // and the links wrap under the name instead. Whether the menu shows is
+  // CSS reading aria-expanded, and only under the nav breakpoint.
+  document.querySelectorAll('.nav-toggle').forEach(function (btn) {
+    var nav = btn.parentNode.querySelector('.nav');
+    function open() { return btn.getAttribute('aria-expanded') === 'true'; }
+    function set(on) { btn.setAttribute('aria-expanded', on ? 'true' : 'false'); }
+    btn.hidden = false;
+    btn.addEventListener('click', function () { set(!open()); });
+    // Two of the links jump within the page. Left open, the menu would cover
+    // the section it just scrolled to.
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a')) set(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || !open()) return;
+      set(false);
+      btn.focus();
+    });
+  });
+
+  if (!navigator.clipboard) return;
+  document.querySelectorAll('.term__copy').forEach(function (btn) {
+    var term = btn.closest('.term');
+    var text = Array.prototype.map.call(
+      term.querySelectorAll('.term__cmd'),
+      function (c) { return c.textContent.trim(); }
+    ).join('\n');
+    if (!text) return;
+    btn.hidden = false;
+    btn.setAttribute('aria-label', 'Copy command to clipboard');
+    btn.addEventListener('click', function () {
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'copied';
+        btn.dataset.done = '';
+      }, function () {
+        btn.textContent = 'failed';
+      });
+      setTimeout(function () {
+        btn.textContent = 'copy';
+        delete btn.dataset.done;
+      }, 1600);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
