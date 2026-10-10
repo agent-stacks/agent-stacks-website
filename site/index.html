@@ -119,6 +119,7 @@ code{font-family:var(--mono);font-size:.92em}
   text-transform:uppercase;color:var(--muted);background:var(--paper);border:1px solid var(--line-2);
   border-radius:5px;padding:3px 9px;cursor:pointer}
 .term__copy:hover,.term__copy[data-done]{color:var(--ink);border-color:var(--ink)}
+.term__note{display:block;padding:9px 20px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted)}
 
 /* tables */
 table{width:100%;border-collapse:collapse;margin:4px 0 18px;font-size:15px}
@@ -293,6 +294,8 @@ footer{border-top:1px solid var(--line);margin-top:40px}
       <button class="term__copy" type="button" hidden>Copy</button>
       <code class="term__cmd">nix run github:agent-stacks/claude-code</code>
     </div>
+    <span class="term__note">Requires
+    <a href="https://github.com/agent-stacks/agent-pkgs#prerequisites">Nix with flakes enabled</a>.</span>
   </div>
 
   <p>The command above puts one directory on your machine with all of the parts, then launches the
