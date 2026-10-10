@@ -100,6 +100,22 @@ strong{color:var(--ink);font-weight:500}
 .parts__value--later{fill:var(--muted)}
 .parts__label--shipped{fill:var(--ink)}
 
+/* launcher flow: what the specification fixes (solid ink outline) and what a
+   launcher derives from it at run time (plain). Wraps to a column on phones. */
+.flow{margin:8px 0 22px}
+.flow ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.flow li{position:relative;background:var(--tile);border:1px solid var(--line-2);border-radius:10px;padding:12px 14px}
+.flow li:not(:last-child)::after{content:"→";position:absolute;right:-21px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-family:var(--mono);font-size:14px}
+.flow__step--spec{border-color:var(--ink)!important}
+.flow__label{display:block;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted)}
+.flow__value{display:block;font-weight:500;margin:2px 0 4px}
+.flow__note{display:block;font-family:var(--mono);font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.flow figcaption{font-size:14px;color:var(--muted);margin-top:12px;max-width:68ch}
+@media(max-width:760px){.flow ol{grid-template-columns:minmax(0,1fr);gap:24px}
+  .flow li:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-22px;transform:translateX(-50%)}}
+
 /* code */
 pre{font-family:var(--mono);font-size:13px;line-height:1.65;background:var(--tile);color:var(--ink);
   border:1px solid var(--line);padding:18px 20px;border-radius:10px;overflow-x:auto;margin:0 0 18px}
@@ -285,29 +301,6 @@ footer{border-top:1px solid var(--line);margin-top:40px}
   </ul>
 </section>
 
-<section id="try">
-  <h2>Try a reference implementation</h2>
-
-  <div class="term">
-    <span class="term__label">Nix reference implementation</span>
-    <div class="term__body">
-      <button class="term__copy" type="button" hidden>Copy</button>
-      <code class="term__cmd">nix run github:agent-stacks/claude-code</code>
-    </div>
-    <span class="term__note">Requires
-    <a href="https://github.com/agent-stacks/agent-pkgs#prerequisites">Nix with flakes enabled</a>.</span>
-  </div>
-
-  <p>The command above puts one directory on your machine with all of the parts, then launches the
-  agent stack.</p>
-  <p><a href="https://github.com/agent-stacks/agent-pkgs">agent-pkgs</a> is a Nix package set
-  implementing the layout: skills and MCP server configurations packaged as reproducible,
-  closure-complete packages and composed into stacks. It builds with plain Nix.</p>
-  <p>An organization can fork it as an internal plugin marketplace: keep the library functions, replace
-  the package set with your own, and ordinary CI builds every package on every pull request. Nix is the
-  first implementation. We invite additional implementations.</p>
-</section>
-
 <section id="specification">
   <h2>A stack on disk</h2>
   <p>A plugin is a directory laid out as <a href="https://agent-plugins.org">Agent Plugins</a>.
@@ -334,15 +327,62 @@ footer{border-top:1px solid var(--line);margin-top:40px}
   </p>
 
   <h3 style="margin-top:28px">A meta specification</h3>
-  <p>Agent Stacks are deliberately minimal interpretations of existing specifications. Every <em>must</em> a builder or a client has
-  to satisfy already comes from one of three specifications.</p>
+  <p>Agent Stacks are deliberately minimal interpretations of existing specifications. For parts where
+  widely adopted standards do not exist yet, agent-stacks is creating neutral on-disk formats.</p>
   <table>
     <tr><th>Standard</th><th>Organization</th><th>What we add</th></tr>
     <tr><td>Agent Plugins</td><td>agent-plugins.org</td><td>The plugin package: manifest, layout, <code>mcp.json</code></td></tr>
     <tr><td>Agent Skills</td><td>agentskills.io</td><td>What a skill is: <code>SKILL.md</code> and what sits beside it</td></tr>
     <tr><td>MCP</td><td>Agentic AI Foundation</td><td>Wire behavior of the servers a plugin ships</td></tr>
-    <tr><td><em>Agent Stacks</em></td><td>agent-stacks.org</td><td>Which versions, where plugins go, dependencies, the on-disk layout</td></tr>
+    <tr><td>Agent Stacks</td><td>agent-stacks.org</td><td>Which versions, where plugins go, dependencies, the on-disk layout</td></tr>
+    <tr><td>Sandbox</td><td>agent-stacks.org</td><td>An on-disk portable representation of a sandbox</td></tr>
+    <tr><td>Harness</td><td>agent-stacks.org</td><td>An on-disk portable representation of a harness</td></tr>
   </table>
+</section>
+
+<section id="launching">
+  <h2>Launching a stack</h2>
+  <figure class="flow">
+    <ol aria-label="How a stack runs">
+      <li class="flow__step--spec"><span class="flow__label">On disk</span>
+        <span class="flow__value">Portable format</span>
+        <span class="flow__note">share/agent-plugins/</span></li>
+      <li><span class="flow__label">Invoke</span>
+        <span class="flow__value">Launcher</span>
+        <span class="flow__note">bin/claude-code</span></li>
+      <li><span class="flow__label">Just in time</span>
+        <span class="flow__value">Runtime format</span>
+        <span class="flow__note">harness and sandbox config</span></li>
+      <li><span class="flow__label">Run</span>
+        <span class="flow__value">Running agent stack</span>
+        <span class="flow__note">harness, plugins, sandbox</span></li>
+    </ol>
+    <figcaption>The specification covers the portable format on disk. We recommend a launcher pattern that
+    translates it into whatever each harness or sandbox needs, just before it runs.</figcaption>
+  </figure>
+</section>
+
+<section id="try">
+  <h2>Try a reference implementation</h2>
+
+  <div class="term">
+    <span class="term__label">Nix reference implementation</span>
+    <div class="term__body">
+      <button class="term__copy" type="button" hidden>Copy</button>
+      <code class="term__cmd">nix run github:agent-stacks/claude-code</code>
+    </div>
+    <span class="term__note">Requires
+    <a href="https://github.com/agent-stacks/agent-pkgs#prerequisites">Nix with flakes enabled</a>.</span>
+  </div>
+
+  <p>The command above puts one directory on your machine with all of the parts, then launches the
+  agent stack.</p>
+  <p><a href="https://github.com/agent-stacks/agent-pkgs">agent-pkgs</a> is a Nix package set
+  implementing the layout: skills and MCP server configurations packaged as reproducible,
+  closure-complete packages and composed into stacks. It builds with plain Nix.</p>
+  <p>An organization can fork it as an internal plugin marketplace: keep the library functions, replace
+  the package set with your own, and ordinary CI builds every package on every pull request. Nix is the
+  first implementation. We invite additional implementations.</p>
 </section>
 
 <section id="start">
